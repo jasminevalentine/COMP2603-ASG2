@@ -39,8 +39,21 @@ public class Reptile extends Animal implements Trackable {
     }
     // --- Trackable methods ---
     // TODO M4: Implement logSighting(String date, String location)
+    public void logSighting(String date, String location) {
+        getSightings().add(date + " at " + location);
+    }
 
     // TODO M4: Implement getSightingCount()
+    public int getSightingCount() {
+        return getSightings().size();
+    }
 
     // TODO M4: Implement getLastSighting()
+    public String getLastSighting() {
+        if (getSightings().isEmpty()) {
+            return "No sightings recorded";
+        } else {
+            return getSightings().get(getSightings().size() - 1);
+        }
+    }
 }
