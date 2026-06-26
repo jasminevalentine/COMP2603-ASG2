@@ -81,10 +81,23 @@ public abstract class Animal {
     public String getSpecies() {return species;}
     public String getNickname() {return nickname;}
     public String  getIsland() {return island;}
-    public double getWightKg() {return weightKg;}
+    public double getWeightKg() {return weightKg;}
     public String getHeathStatus() {return healthStatus;}
 
     // TODO M2: Write setIsland(String island) method
+    public void setIsland(String island) {
+        if (island == null) {
+            throw new IllegalArgumentException("Island can not be null.");
+        }
+
+        island = island.trim();
+
+        if (island.isEmpty()) {
+            throw new IllegalArgumentException("Island can not be empty.");
+        }
+
+        this.island = island;
+    }
 
     // TODO M4: Write getSightings() getter that returns the ArrayList<String>
 
