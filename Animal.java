@@ -5,10 +5,17 @@ import java.util.ArrayList;
  */
 public abstract class Animal {
     // TODO M1: Declare static nextId field, starting at 1
+    private static int nextId = 1;
 
     // TODO M1: Declare private fields:
     //   animalId (int), species (String), nickname (String),
     //   island (String), weightKg (double), healthStatus (String)
+    private int animalId;
+    private String species;
+    private String nickname;
+    private String island;
+    private double weightKg;
+    private String healthStatus;
 
     // TODO M4: Declare private ArrayList<String> sightings field
 
@@ -25,10 +32,57 @@ public abstract class Animal {
         // TODO M1: Validate parameters and assign fields
         // TODO M1: Auto-assign animalId from nextId, then increment nextId
         // TODO M4: Initialize sightings ArrayList
+
+        if (species == null) {
+            throw new IllegalArgumentException("Species can not be null.");
+        }
+
+        species = species.trim();
+
+        if (species.isEmpty()) {
+            throw new IllegalArgumentException("Species can not be empty.");
+        }
+
+        if (nickname == null) {
+            throw new IllegalArgumentException("Nickname can not be null.");
+        }
+
+        nickname = nickname.trim();
+
+        if (nickname.isEmpty()) {
+            throw new IllegalArgumentException("Nickname can not be empty.");
+        }
+
+        if (island == null) {
+            throw new IllegalArgumentException("Island can not be null.");
+        }
+
+        island = island.trim();
+
+        if (island.isEmpty()) {
+            throw new IllegalArgumentException("Island can not be empty.");
+        }
+
+        if (weightKg <= 0) {
+            throw new IllegalArgumentException("Weight must be greater than 0.");
+        }
+
+        if (!healthStatus.equals("Healthy") && !healthStatus.equals("Injured") && !healthStatus.equals("Critical")) {
+            throw new IllegalArgumentException("Invalid health status.");
+        }
+
+        animalId = nextId;
+        nextId++;
     }
 
     // TODO M1: Write getters for all fields (getAnimalId, getSpecies, getNickname,
     //          getIsland, getWeightKg, getHealthStatus)
+    public int getAnimalId() {return animalId;}
+    public String getSpecies() {return species;}
+    public String getNickname() {return nickname;}
+    public String  getIsland() {return island;}
+    public double getWightKg() {return weightKg;}
+    public String getHeathStatus() {return healthStatus;}
 
     // TODO M2: Write setIsland(String island) method
 
@@ -40,6 +94,10 @@ public abstract class Animal {
      */
     public void updateHealth(String newStatus) {
         // TODO M1: Validate newStatus and update the field
+        if (!newStatus.equals("Healthy") && !newStatus.equals("Injured") && !newStatus.equals("Critical")) {
+            throw new IllegalArgumentException("Invalid health status.");
+        }
+        healthStatus = newStatus;
     }
 
     /**
@@ -63,7 +121,7 @@ public abstract class Animal {
     @Override
     public String toString() {
         // TODO M1: Return formatted string
-        return "";
+        return String.format("#%03d %s '%s' (%s) [%s] %.2f kg - %s", animalId, species, nickname, island, getType(), weightKg, healthStatus);
     }
 
     /**
