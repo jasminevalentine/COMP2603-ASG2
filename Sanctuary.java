@@ -121,7 +121,14 @@ public class Sanctuary {
      */
     public ArrayList<Animal> getRelocatableAnimals() {
         // TODO M8: Filter using instanceof Relocatable
-        return new ArrayList<Animal>();
+        ArrayList<Animal> relocatableAnimals = new ArrayList<>();
+
+        for (Animal a : animals) {
+            if (a instanceof Relocatable) {
+                relocatableAnimals.add(a);
+            }
+        }
+        return relocatableAnimals;
     }
 
     /**
@@ -154,7 +161,23 @@ public class Sanctuary {
      */
     public boolean transferAnimal(int animalId, Sanctuary target) {
         // TODO M8: Remove animal, check Relocatable, relocate, add to target
-        return false;
+        Animal animal = removeAnimal(animalId);
+
+        if (!(animal instanceof Relocatable)) {
+            addAnimal(animal);
+            return false;
+        }
+
+        Relocatable relocatableAnimal = (Relocatable) animal;
+        relocatableAnimal.relocateTo(target.getIsland());
+
+        if (!target.addAnimal(animal)) {
+            relocatableAnimal.relocateTo(getIsland());
+            addAnimal(animal);
+            return  false;
+        }
+
+        return true;
     }
 
     /**
