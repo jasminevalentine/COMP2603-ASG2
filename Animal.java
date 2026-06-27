@@ -74,8 +74,13 @@ public abstract class Animal {
             throw new IllegalArgumentException("Invalid health status.");
         }
 
-        animalId = nextId;
+        this.animalId = nextId;
         nextId++;
+        this.species = species;
+        this.nickname = nickname;
+        this.island = island;
+        this.weightKg = weightKg;
+        this.healthStatus = healthStatus;
     }
 
     // TODO M1: Write getters for all fields (getAnimalId, getSpecies, getNickname,
