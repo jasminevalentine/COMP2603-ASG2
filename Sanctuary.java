@@ -88,7 +88,14 @@ public class Sanctuary {
      */
     public ArrayList<Animal> getAnimalsOfType(String type) {
         // TODO M7: Filter by getType()
-        return new ArrayList<Animal>();
+        ArrayList<Animal> filteredByType = new ArrayList<>();
+
+        for (Animal a : animals) {
+            if (a.getType().equals(type)) {
+                filteredByType.add(a);
+            }
+        }
+        return filteredByType;
     }
 
     /**
@@ -98,7 +105,12 @@ public class Sanctuary {
      */
     public double getDailyFoodBudget() {
         // TODO M7: Sum getDailyFoodCostTTD() for all animals
-        return 0.0;
+        double total = 0.0;
+
+        for (Animal a: animals) {
+            total += a.getDailyFoodCostTTD();
+        }
+        return Math.round(total * 100.0) / 100.0;
     }
 
     /**
@@ -119,7 +131,17 @@ public class Sanctuary {
      */
     public Animal getMostExpensiveAnimal() {
         // TODO M7: Find max by getDailyFoodCostTTD()
-        return null;
+        if (animals.isEmpty()) {
+            return null;
+        }
+        Animal mostExpensive = animals.get(0);
+
+        for (Animal a : animals) {
+            if (a.getDailyFoodCostTTD() > mostExpensive.getDailyFoodCostTTD()) {
+                mostExpensive = a;
+            }
+        }
+        return mostExpensive;
     }
 
     /**
