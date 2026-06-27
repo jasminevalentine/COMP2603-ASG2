@@ -6,15 +6,27 @@ import java.util.ArrayList;
 public class Sanctuary {
     // TODO M5: Declare private fields: name (String), island (String),
     //          capacity (int), animals (ArrayList<Animal>)
+    private String name;
+    private String island;
+    private int capacity;
+    private ArrayList<Animal> animals;
 
     /**
      * TODO M5: Implement constructor
      */
     public Sanctuary(String name, String island, int capacity) {
         // TODO M5: Initialize all fields, create empty ArrayList
+        this.name = name;
+        this.island = island;
+        this.capacity = capacity;
+        this.animals = new ArrayList<>();
     }
 
     // TODO M5: Write getters for name, island, capacity, and animals
+    public String getName() {return name;}
+    public String getIsland() {return island;}
+    public int getCapacity() {return capacity;}
+    public ArrayList<Animal> getAnimals() {return animals;}
 
     /**
      * Adds an animal to this sanctuary.
@@ -25,7 +37,17 @@ public class Sanctuary {
      */
     public boolean addAnimal(Animal a) {
         // TODO M5: Validate and add
-        return false;
+        if (a == null) {
+            return false;
+        }
+        if (animals.size() >= capacity) {
+            return false;
+        }
+        if (!a.getIsland().equals(island)) {
+            return false;
+        }
+        animals.add(a);
+        return true;
     }
 
     /**
@@ -35,7 +57,20 @@ public class Sanctuary {
      */
     public Animal removeAnimal(int animalId) {
         // TODO M5: Find by ID, remove, and return
-        return null;
+        Animal toBeRemoved = null;
+
+        for (Animal a : animals) {
+            if (a.getAnimalId() == animalId) {
+                toBeRemoved = a;
+                break;
+            }
+        }
+
+        if (toBeRemoved != null) {
+            animals.remove(toBeRemoved);
+        }
+
+        return toBeRemoved;
     }
 
     /**
@@ -43,7 +78,7 @@ public class Sanctuary {
      */
     public int getAnimalCount() {
         // TODO M5
-        return 0;
+        return animals.size();
     }
 
     /**
@@ -107,6 +142,9 @@ public class Sanctuary {
      */
     public void printRoster() {
         // TODO M5: Loop and print
+        for (Animal a : animals) {
+            System.out.println("  " + a.toString());
+        }
     }
 
     /**
@@ -118,6 +156,6 @@ public class Sanctuary {
     @Override
     public String toString() {
         // TODO M5: Return formatted string
-        return "";
+        return String.format("%s (%s) [%d/%d animals]", name, island, getAnimalCount(), capacity);
     }
 }
