@@ -162,6 +162,27 @@ public class SanctuaryGUI extends JFrame implements ActionListener, KeyListener{
      */
     public static void main(String[] args) {
         // TODO M12: Create Sanctuary, add animals, create GUI, wire model, show
+        Sanctuary sanctuary = new Sanctuary("Caroni Bird Sanctuary", "Trinidad", 20);
+
+        Bird ruby = new Bird("Scarlet Ibis", "Ruby", "Trinidad", 0.35, "Healthy", 60.0, true);
+        Bird blaze = new Bird("Scarlet Ibis", "Blaze", "Trinidad", 0.40, "Healthy", 58.0, true);
+        Bird dusty = new Bird("Cocrico", "Dusty", "Trinidad", 0.25, "Injured", 30.0, true);
+        Reptile brutus = new Reptile("Spectacled Caiman", "Brutus", "Trinidad", 45.0, "Healthy", false, 180.0);
+        Reptile medusa = new Reptile("Green Anaconda", "Medusa", "Trinidad", 30.0, "Critical", false, 350.0);
+        Marine atlas = new Marine("Leatherback Turtle", "Atlas", "Trinidad", 500.0, "Healthy", 1200.0, 8000);
+
+        sanctuary.addAnimal(ruby);
+        sanctuary.addAnimal(blaze);
+        sanctuary.addAnimal(dusty);
+        sanctuary.addAnimal(brutus);
+        sanctuary.addAnimal(medusa);
+        sanctuary.addAnimal(atlas);
+
+        SanctuaryGUI gui = new SanctuaryGUI();
+
+        gui.setModel(sanctuary);
+        gui.setVisible(true);
+        gui.setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 
     @Override
