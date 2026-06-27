@@ -90,7 +90,7 @@ public abstract class Animal {
     public String getNickname() {return nickname;}
     public String  getIsland() {return island;}
     public double getWeightKg() {return weightKg;}
-    public String getHeathStatus() {return healthStatus;}
+    public String getHealthStatus() {return healthStatus;}
 
     // TODO M2: Write setIsland(String island) method
     public void setIsland(String island) {

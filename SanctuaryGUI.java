@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -11,7 +12,7 @@ import java.util.ArrayList;
  *   CENTER: Scrollable text area showing results
  *   SOUTH:  Status label showing match count
  */
-public class SanctuaryGUI extends JFrame {
+public class SanctuaryGUI extends JFrame implements ActionListener, KeyListener{
     // TODO M10: Declare private Sanctuary field
     private Sanctuary sanctuary;
 
@@ -72,8 +73,11 @@ public class SanctuaryGUI extends JFrame {
         add(statusLabel, BorderLayout.SOUTH);
 
         // TODO M11: Add ActionListener to searchButton that calls runSearch()
+        searchButton.addActionListener(this);
+
 
         // TODO M11: Add KeyListener to nameField that calls runSearch() on keyReleased
+        nameField.addKeyListener(this);
 
         setLocationRelativeTo(null);
     }
@@ -98,7 +102,7 @@ public class SanctuaryGUI extends JFrame {
      * Steps:
      * 1. Get text from nameField (trim, convert to lowercase)
      * 2. Get selected type from typeCombo
-     * 3. Get checkbox state from injuredCheck
+     * String selectedType = typeCombo.getSelectedItem();
      * 4. Loop through sanctuary's animals:
      *    - If text is non-empty, keep only animals whose species or nickname
      *      contains the text (case-insensitive)
@@ -109,6 +113,46 @@ public class SanctuaryGUI extends JFrame {
      */
     private void runSearch() {
         // TODO M11: Implement filtering and display
+        String text = nameField.getText().trim().toLowerCase();
+        String selectedType = (String) typeCombo.getSelectedItem();
+
+        ArrayList<Animal> matchingAnimals = new ArrayList<>();
+        for (Animal a : sanctuary.getAnimals()) {
+            if (!text.isEmpty()) {
+                String speciesLower = a.getSpecies().toLowerCase();
+                String nicknameLower = a.getNickname().toLowerCase();
+                if (!speciesLower.contains(text) && !nicknameLower.contains(text)) {
+                    continue;
+                }
+            }
+            if (!selectedType.equals("All")) {
+                if (!a.getType().equals(selectedType)) {
+                    continue;
+                }
+            }
+            if (injuredCheck.isSelected()) {
+                if (!a.getHealthStatus().equals("Injured") && !a.getHealthStatus().equals("Critical")) {
+                    continue;
+                }
+            }
+            matchingAnimals.add(a);
+        }
+
+        StringBuilder sb = new StringBuilder();
+
+        for (Animal a : matchingAnimals) {
+            sb.append(a.toString()).append("\n");
+        }
+        resultArea.setText(sb.toString());
+
+        int n = matchingAnimals.size();
+        if (n == 0) {
+            statusLabel.setText("No matches");
+        } else if (n == 1) {
+            statusLabel.setText("1 result");
+        } else {
+            statusLabel.setText(n + " results");
+        }
     }
 
     /**
@@ -118,5 +162,19 @@ public class SanctuaryGUI extends JFrame {
      */
     public static void main(String[] args) {
         // TODO M12: Create Sanctuary, add animals, create GUI, wire model, show
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        runSearch();
+    }
+
+    @Override public void keyTyped(KeyEvent e)    {}
+
+    @Override public void keyPressed(KeyEvent e)  {}
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        runSearch();
     }
 }
